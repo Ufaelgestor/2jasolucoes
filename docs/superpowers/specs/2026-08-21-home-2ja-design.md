@@ -39,15 +39,22 @@ Confirmada com base no logo real e no cartão de visita (tipografia serifada ref
 preto e branco, bastante espaço em branco) — não a linha industrial-brutalista
 alternativa que também foi cogitada.
 
-- **Paleta** (definida no briefing, evita o verde saturado que Bauer/Valley/Hidrogeral/
-  Irrigafort usam — diferenciação imediata):
-  - `--bg: #F6F2EA` · `--surface: #FFFFFF` · `--surface-2: #EFE9DC`
-  - `--text: #221F1A` · `--text-muted: #6B6357`
-  - `--accent: #AE4B1D` (ferrugem, botões/CTAs) · `--accent-ink: #FFFFFF`
-  - `--accent-2: #3D6B78` (aço/teal, detalhes e links)
-  - `--line: #DFD6C4` · `--line-strong: #C9BEA6`
-  - Dark mode automático via `prefers-color-scheme: dark`, tokens equivalentes já
-    definidos no briefing (`#17181A` bg, `#E1834B` accent, etc.)
+- **Paleta — revisada após feedback direto do Artur** (v2): a paleta ferrugem/aço do
+  briefing inicial foi **substituída** por uma paleta monocromática (preto/branco/
+  cinza-morno), porque o Artur pediu explicitamente para seguir a paleta de cores da
+  própria logo — e todo o material de marca real do cliente (cartão de visita, van,
+  fachada, polo, crachá na `ARPESENTAÇÃO VISUAL.pdf`) é 100% preto e branco, sem
+  nenhuma cor. A logo em si (`logo_2ja_transparente.png`) é um glifo branco sobre
+  fundo transparente — precisa de `filter: brightness(0) saturate(100%)` para ficar
+  legível sobre as superfícies claras do site (header/rodapé) e nenhum filtro sobre
+  fundos escuros.
+  - `--bg: #F7F5F1` · `--surface: #FFFFFF` · `--surface-2: #EDEAE3`
+  - `--text: #141414` · `--text-muted: #5C5A55`
+  - `--accent: #141414` (preto, botões/CTAs) · `--accent-ink: #FFFFFF`
+  - `--accent-2: #5C5A55` (cinza médio, detalhes e links)
+  - `--line: #E2DFD7` · `--line-strong: #C9C5B9`
+  - Dark mode automático via `prefers-color-scheme: dark` — inverte para fundo quase
+    preto (`#141414`) com texto e acentos quase brancos (`#F2F0EC`).
 - **Tipografia**: display serifado (Georgia/"Iowan Old Style"/"Palatino Linotype") nos
   títulos, ecoando o serifado do wordmark "2J.A"; corpo em sans-serif do sistema;
   rótulos técnicos/badges em monoespaçada (reforça o caráter técnico sem virar
@@ -61,7 +68,7 @@ alternativa que também foi cogitada.
 - Logo: usar o PNG transparente (`assets/logo/logo_2ja_transparente.png`) — funciona
   tanto sobre fundo claro quanto escuro.
 
-## Estrutura da página (one-page)
+## Estrutura da página (one-page + páginas de produto)
 
 Ordem exata, sem menu institucional — toda navegação empurra para o WhatsApp:
 
@@ -76,9 +83,23 @@ Ordem exata, sem menu institucional — toda navegação empurra para o WhatsApp
 5. **Diferenciais** — 5 cards curtos (Preço Justo, Agilidade, Mão de Obra Qualificada,
    Parceria, Estrutura Própria)
 6. **Área de Atuação** — título + texto (nacional)
-7. **Rodapé + Contato** — endereço, 2 WhatsApp, e-mail, Instagram, linha de serviços
+7. **Faixa da fábrica** — foto aérea real da fábrica (extraída do portfólio) com legenda
+8. **Onde estamos** — card escuro com endereço completo + botões "Traçar rota" e
+   "Abrir no Google Maps" (deep links do Google Maps) ao lado de um mapa incorporado
+   do OpenStreetMap (sem necessidade de chave de API), com marcador aproximado sobre a
+   GO-222 entre Nerópolis e Nova Veneza. Padrão pedido pelo Artur a partir de um site
+   de referência.
+9. **Rodapé + Contato** — endereço, 2 WhatsApp, e-mail, Instagram, linha de serviços
    extra, copyright
-8. **Botão WhatsApp flutuante** — fixo do hero ao rodapé, mensagem genérica de contato
+10. **Botão WhatsApp flutuante** — fixo do hero ao rodapé, mensagem genérica de contato
+
+**Páginas de produto dedicadas** (pedido do Artur, revisão do escopo one-page
+original): cada um dos 12 produtos (5 campeões + 7 outros) tem uma página própria em
+`produtos/<slug>.html` — foto grande, gancho completo, bullets e CTA de orçamento. Os
+cards da Home linkam para essas páginas (foto e título clicáveis); o botão "Pedir
+orçamento" continua indo direto pro WhatsApp, não para a página do produto. As páginas
+são geradas por `scripts/gen_products.py` a partir de uma lista de dados — reexecutar
+o script sempre que a copy de produto mudar, em vez de editar os HTMLs gerados à mão.
 
 ## Abordagem técnica
 
@@ -99,6 +120,16 @@ Arquivos:
 SEO: `<title>` e `<meta name="description">` exatamente como especificados na copy
 (seção 7). Sem analytics/tracking nesta primeira versão — pode entrar depois se o
 cliente pedir.
+
+## Nota — fotos adicionais da empresa
+
+O Artur pediu para incorporar mais fotos reais da empresa (não só produto). O perfil
+`@2j.asolucoes` no Instagram existe e é ativo, mas suas imagens ficam atrás de URLs de
+CDN assinadas/expiráveis que não podem ser baixadas por ferramenta automatizada
+(testado, bloqueado). Google Meu Negócio não retornou fotos via busca. Caminho mais
+confiável: o próprio Artur exportar fotos do celular/Instagram e enviar diretamente.
+Por ora, a foto aérea real da fábrica (já extraída do portfólio) foi adicionada como
+uma faixa dedicada antes da seção "Onde estamos".
 
 ## Fora de escopo (não fazer nesta rodada)
 
