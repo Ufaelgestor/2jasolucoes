@@ -526,8 +526,8 @@ p{margin:0 0 1em;}
 .video-wrap .bastidores-sub{margin-bottom:32px;}
 .video-player{
   width:100%;
-  max-width:340px;
-  aspect-ratio:9/16;
+  max-width:760px;
+  aspect-ratio:720/394;
   margin:0 auto;
   border-radius:var(--radius);
   box-shadow:var(--shadow);
