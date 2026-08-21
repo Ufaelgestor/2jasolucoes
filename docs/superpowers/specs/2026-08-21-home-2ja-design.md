@@ -172,6 +172,23 @@ layout, e sim falta de identidade específica da marca. Mudanças:
   resolução baixa (240px, teto do Instagram sem login), por isso aparecem em miniatura
   numa faixa, não em tamanho grande de hero.
 
+## Nota — quarta revisão (legibilidade para o público real, v6)
+
+Feedback do usuário: a Bodoni Moda (serifada de alto contraste, traços finos) é uma
+fonte editorial de revista de moda, difícil de ler pra quem não está acostumado com
+esse tipo de tipografia — e o público-alvo real do site é o produtor rural, público
+mais velho e leigo em design, não um público urbano/editorial. Prioridade trocou de
+"parecer uma revista premium" para "ser fácil de ler à primeira vista".
+
+- **Tipografia trocada para Roboto Slab** nos títulos — serifada ainda (mantém
+  reminiscência da logo), mas robusta, sem traços finos frágeis, alta legibilidade em
+  qualquer tamanho. Muito mais "estrutura sólida" do que "revista de moda", o que
+  também combina melhor com o produto (estruturas metálicas).
+- **Tamanhos de fonte aumentados em quase todo o site**: corpo do texto de 16px para
+  17.5px, botões de 15px para 16.5px (CTA principal 18px), descrições de produto,
+  diferenciais, endereço, rodapé — todos ~1-1.5px maiores. Pequenos ganhos somados
+  fazem diferença real de conforto de leitura pra um público mais velho.
+
 ## Nota — terceira revisão (referência Floria/tasteskill.dev, v5)
 
 O usuário apontou o showcase oficial da skill (tasteskill.dev, projeto "Floria") como
