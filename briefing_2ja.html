@@ -1,0 +1,745 @@
+<title>2J.A Estruturas Metálicas — Briefing de Pesquisa e Estrutura de Site</title>
+<style>
+  :root{
+    --bg:#F6F2EA;
+    --surface:#FFFFFF;
+    --surface-2:#EFE9DC;
+    --text:#221F1A;
+    --text-muted:#6B6357;
+    --accent:#AE4B1D;
+    --accent-ink:#FFFFFF;
+    --accent-2:#3D6B78;
+    --line:#DFD6C4;
+    --line-strong:#C9BEA6;
+    --good:#3E6E4E;
+    --warn:#A97418;
+    --shadow:0 1px 2px rgba(34,31,26,.04),0 8px 24px -12px rgba(34,31,26,.15);
+    --radius:10px;
+    --font-display:Georgia,"Iowan Old Style","Palatino Linotype",serif;
+    --font-body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --font-data:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#17181A;
+      --surface:#1E2023;
+      --surface-2:#25272B;
+      --text:#EDE9E1;
+      --text-muted:#A6A093;
+      --accent:#E1834B;
+      --accent-ink:#1A1108;
+      --accent-2:#7FB4C4;
+      --line:#33363A;
+      --line-strong:#454850;
+      --good:#6FBE8B;
+      --warn:#E0AE58;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#17181A;--surface:#1E2023;--surface-2:#25272B;--text:#EDE9E1;--text-muted:#A6A093;
+    --accent:#E1834B;--accent-ink:#1A1108;--accent-2:#7FB4C4;--line:#33363A;--line-strong:#454850;
+    --good:#6FBE8B;--warn:#E0AE58;--shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px -12px rgba(0,0,0,.5);
+  }
+  :root[data-theme="light"]{
+    --bg:#F6F2EA;--surface:#FFFFFF;--surface-2:#EFE9DC;--text:#221F1A;--text-muted:#6B6357;
+    --accent:#AE4B1D;--accent-ink:#FFFFFF;--accent-2:#3D6B78;--line:#DFD6C4;--line-strong:#C9BEA6;
+    --good:#3E6E4E;--warn:#A97418;--shadow:0 1px 2px rgba(34,31,26,.04),0 8px 24px -12px rgba(34,31,26,.15);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--accent-2);}
+  a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--accent-2);outline-offset:2px;}
+
+  .shell{
+    display:flex;
+    max-width:1180px;
+    margin:0 auto;
+    gap:48px;
+    padding:0 24px;
+  }
+
+  /* ---- Sidebar / TOC ---- */
+  nav.toc{
+    flex:0 0 216px;
+    position:sticky;
+    top:0;
+    align-self:flex-start;
+    padding:40px 0 40px 0;
+    max-height:100vh;
+    overflow-y:auto;
+  }
+  nav.toc .eyebrow{
+    font-family:var(--font-data);
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    margin:0 0 14px;
+  }
+  nav.toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;counter-reset:toc;}
+  nav.toc li{counter-increment:toc;}
+  nav.toc a{
+    display:flex;
+    gap:10px;
+    text-decoration:none;
+    color:var(--text-muted);
+    font-size:13.5px;
+    padding:6px 8px;
+    border-radius:6px;
+    border-left:2px solid transparent;
+  }
+  nav.toc a::before{
+    content:counter(toc,decimal-leading-zero);
+    font-family:var(--font-data);
+    font-size:11px;
+    color:var(--line-strong);
+    padding-top:1px;
+  }
+  nav.toc a:hover{color:var(--text);background:var(--surface-2);}
+
+  /* ---- Main column ---- */
+  main{flex:1 1 auto;min-width:0;padding:40px 0 120px;}
+
+  .cover{
+    padding-bottom:32px;
+    margin-bottom:40px;
+    border-bottom:1px solid var(--line);
+  }
+  .cover .tag{
+    display:inline-block;
+    font-family:var(--font-data);
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    border:1px solid currentColor;
+    padding:3px 9px;
+    border-radius:100px;
+    margin-bottom:18px;
+  }
+  .cover h1{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:clamp(32px,4.4vw,46px);
+    line-height:1.08;
+    margin:0 0 12px;
+    text-wrap:balance;
+    letter-spacing:-.01em;
+  }
+  .cover .sub{
+    font-size:17px;
+    color:var(--text-muted);
+    max-width:60ch;
+    margin:0 0 22px;
+  }
+  .cover .meta{
+    display:flex;
+    flex-wrap:wrap;
+    gap:24px;
+    font-family:var(--font-data);
+    font-size:12.5px;
+    color:var(--text-muted);
+  }
+  .cover .meta b{color:var(--text);font-weight:600;}
+
+  section{margin-bottom:64px;scroll-margin-top:24px;}
+  section > h2{
+    font-family:var(--font-display);
+    font-size:26px;
+    font-weight:700;
+    margin:0 0 8px;
+    letter-spacing:-.01em;
+  }
+  section > .lede{
+    color:var(--text-muted);
+    font-size:15px;
+    max-width:66ch;
+    margin:0 0 28px;
+  }
+  h3{font-size:16px;font-weight:700;margin:0 0 10px;}
+  h4{font-size:14px;font-weight:700;margin:0 0 6px;}
+  p{margin:0 0 12px;}
+  .prose p:last-child{margin-bottom:0;}
+
+  /* ---- Info grid (perfil) ---- */
+  .infogrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:1px;
+    background:var(--line);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+    margin-bottom:28px;
+  }
+  .infogrid dl{background:var(--surface);margin:0;padding:16px 18px;}
+  .infogrid dt{
+    font-family:var(--font-data);
+    font-size:10.5px;
+    letter-spacing:.07em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    margin-bottom:5px;
+  }
+  .infogrid dd{margin:0;font-size:14.5px;font-weight:600;line-height:1.4;}
+  .infogrid dd.mono{font-family:var(--font-data);font-weight:500;font-size:13.5px;}
+
+  .callout{
+    background:var(--surface-2);
+    border-left:3px solid var(--accent);
+    border-radius:0 8px 8px 0;
+    padding:16px 20px;
+    font-size:14.5px;
+    margin-bottom:8px;
+  }
+  .callout b{color:var(--accent);}
+
+  .pillrow{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 0;}
+  .pill{
+    font-family:var(--font-data);
+    font-size:12px;
+    padding:5px 11px;
+    border-radius:100px;
+    background:var(--surface-2);
+    border:1px solid var(--line-strong);
+    color:var(--text-muted);
+  }
+
+  /* ---- Product catalog ---- */
+  .cat-group{margin-bottom:36px;}
+  .cat-group__head{
+    display:flex;
+    align-items:baseline;
+    gap:10px;
+    margin-bottom:14px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--line);
+  }
+  .cat-group__head h3{font-size:15px;margin:0;}
+  .cat-group__head span{
+    font-family:var(--font-data);
+    font-size:12px;
+    color:var(--text-muted);
+  }
+  .cardgrid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:14px;
+  }
+  .prodcard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:16px 18px;
+    box-shadow:var(--shadow);
+  }
+  .prodcard .num{
+    font-family:var(--font-data);
+    font-size:11px;
+    color:var(--accent-2);
+    margin-bottom:6px;
+    display:block;
+  }
+  .prodcard h4{font-size:14.5px;margin-bottom:8px;}
+  .prodcard ul{margin:0;padding-left:16px;font-size:13px;color:var(--text-muted);}
+  .prodcard li{margin-bottom:3px;}
+  .prodcard.champion{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent),var(--shadow);}
+  .champion-badge{display:inline-block;font-family:var(--font-data);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-ink);background:var(--accent);padding:2px 8px;border-radius:100px;margin-bottom:8px;}
+
+  /* ---- Hierarchy: champions vs others (section 6) ---- */
+  .champ-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:20px;}
+  .champ-card{
+    background:var(--surface);
+    border:1px solid var(--accent);
+    box-shadow:0 0 0 1px var(--accent),var(--shadow);
+    border-radius:var(--radius);
+    padding:20px;
+  }
+  .champ-card .champion-badge{margin-bottom:10px;}
+  .champ-card h4{font-size:16px;margin-bottom:8px;}
+  .champ-card p{font-size:13.5px;color:var(--text-muted);margin-bottom:12px;}
+  .cta-fake{
+    display:inline-flex;align-items:center;gap:6px;
+    font-family:var(--font-data);font-size:12px;font-weight:600;
+    color:var(--good);border:1px dashed var(--good);border-radius:100px;padding:5px 12px;
+  }
+  .others-strip{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;}
+  .others-strip .pill{background:var(--surface);}
+
+  /* ---- Competitor table ---- */
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);}
+  table{border-collapse:collapse;width:100%;min-width:760px;background:var(--surface);}
+  th,td{text-align:left;padding:11px 14px;font-size:13.5px;border-bottom:1px solid var(--line);vertical-align:top;}
+  thead th{
+    font-family:var(--font-data);
+    font-size:11px;
+    letter-spacing:.05em;
+    text-transform:uppercase;
+    color:var(--text-muted);
+    background:var(--surface-2);
+    white-space:nowrap;
+  }
+  tbody tr:last-child td{border-bottom:none;}
+  td.company{font-weight:700;}
+  td.company small{display:block;font-weight:400;color:var(--text-muted);font-size:12px;margin-top:2px;}
+  .tag-direct{color:var(--accent);font-weight:600;}
+  .tag-indirect{color:var(--accent-2);font-weight:600;}
+
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+  @media (max-width:640px){.split{grid-template-columns:1fr;}}
+  .opp-card,.threat-card{
+    border-radius:var(--radius);
+    padding:18px 20px;
+    border:1px solid var(--line);
+  }
+  .opp-card{background:color-mix(in srgb, var(--good) 8%, var(--surface));}
+  .threat-card{background:color-mix(in srgb, var(--warn) 10%, var(--surface));}
+  .opp-card h3{color:var(--good);}
+  .threat-card h3{color:var(--warn);}
+  .opp-card ul,.threat-card ul{margin:0;padding-left:18px;font-size:14px;}
+  .opp-card li,.threat-card li{margin-bottom:8px;}
+
+  /* ---- Sitemap tree ---- */
+  .sitemap{font-size:14px;}
+  .sitemap > ul{list-style:none;margin:0;padding:0;}
+  .sitemap ul{list-style:none;margin:0;padding-left:26px;}
+  .sitemap li{position:relative;padding:5px 0 5px 22px;}
+  .sitemap li::before{
+    content:"";
+    position:absolute;
+    left:0;top:0;bottom:0;
+    border-left:1px solid var(--line-strong);
+  }
+  .sitemap li::after{
+    content:"";
+    position:absolute;
+    left:0;top:18px;
+    width:16px;
+    border-top:1px solid var(--line-strong);
+  }
+  .sitemap li:last-child::before{bottom:auto;height:18px;}
+  .sitemap > ul > li{padding-left:0;}
+  .sitemap > ul > li::before,.sitemap > ul > li::after{content:none;}
+  .page-node{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:7px;
+    padding:6px 12px;
+    font-weight:600;
+    box-shadow:var(--shadow);
+  }
+  .page-node.top{background:var(--accent);color:var(--accent-ink);border-color:var(--accent);font-family:var(--font-data);font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;font-weight:700;}
+  .leaf{color:var(--text-muted);font-size:13.5px;padding:4px 0;display:block;}
+
+  /* ---- Page-by-page breakdown ---- */
+  .pagecard{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    margin-bottom:16px;
+    overflow:hidden;
+  }
+  .pagecard__head{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:14px 20px;
+    background:var(--surface-2);
+    border-bottom:1px solid var(--line);
+  }
+  .pagecard__head h3{margin:0;font-size:15px;}
+  .pagecard__head .obj{font-size:12px;color:var(--text-muted);font-style:italic;}
+  .pagecard__body{padding:16px 20px;}
+  .pagecard ol{margin:0;padding-left:20px;font-size:14px;}
+  .pagecard li{margin-bottom:7px;}
+  .pagecard li b{font-weight:700;}
+
+  .steps{list-style:none;margin:0;padding:0;counter-reset:step;display:flex;flex-direction:column;gap:12px;}
+  .steps li{
+    counter-increment:step;
+    display:flex;
+    gap:14px;
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:14px 18px;
+  }
+  .steps li::before{
+    content:counter(step);
+    flex:0 0 auto;
+    width:26px;height:26px;
+    border-radius:50%;
+    background:var(--accent);
+    color:var(--accent-ink);
+    font-family:var(--font-data);
+    font-size:12.5px;
+    font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .steps p{margin:0;font-size:14px;}
+  .steps b{display:block;font-size:14.5px;margin-bottom:2px;}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding-top:24px;
+    font-size:12.5px;
+    color:var(--text-muted);
+  }
+
+  @media (max-width:900px){
+    .shell{flex-direction:column;gap:0;padding:0 18px;}
+    nav.toc{
+      position:static;
+      max-height:none;
+      padding:20px 0 8px;
+      border-bottom:1px solid var(--line);
+    }
+    nav.toc ol{flex-direction:row;flex-wrap:nowrap;overflow-x:auto;gap:6px;padding-bottom:6px;}
+    nav.toc a{white-space:nowrap;border-left:none;border:1px solid var(--line);}
+    main{padding:24px 0 80px;}
+  }
+</style>
+
+<div class="shell">
+  <nav class="toc" aria-label="Sumário">
+    <p class="eyebrow">Sumário</p>
+    <ol>
+      <li><a href="#perfil">Perfil da empresa</a></li>
+      <li><a href="#mercado">Mercado e nicho</a></li>
+      <li><a href="#catalogo">Catálogo de produtos</a></li>
+      <li><a href="#concorrencia">Concorrência</a></li>
+      <li><a href="#oportunidades">Oportunidades e riscos</a></li>
+      <li><a href="#sitemap">Estrutura do site</a></li>
+      <li><a href="#paginas">Página a página</a></li>
+      <li><a href="#proximos">Próximos passos</a></li>
+    </ol>
+  </nav>
+
+  <main>
+    <div class="cover">
+      <span class="tag">Briefing de pesquisa · Pré-projeto de site</span>
+      <h1>2J.A Soluções em Estruturas Metálicas</h1>
+      <p class="sub">Levantamento da empresa, do mercado de estruturas metálicas para irrigação agrícola e dos concorrentes diretos, com proposta de arquitetura de site — seção por seção, produto por produto.</p>
+      <div class="meta">
+        <span><b>Cliente</b> 2J.A Estruturas Metálicas — entre Nerópolis e Nova Veneza, GO</span>
+        <span><b>Data</b> 13 de agosto de 2026</span>
+        <span><b>Fontes</b> Portfólio institucional (PDF), Instagram, Econodata, pesquisa de mercado</span>
+      </div>
+    </div>
+
+    <!-- 1. PERFIL -->
+    <section id="perfil">
+      <h2>1. Perfil da empresa</h2>
+      <p class="lede">Dados cadastrais e operacionais consolidados a partir do portfólio fornecido pelo cliente e de registro público (Econodata).</p>
+
+      <div class="infogrid">
+        <dl><dt>Razão social</dt><dd>2JA Soluções em Estruturas Metálicas LTDA</dd></dl>
+        <dl><dt>Nome fantasia</dt><dd>2J.A Estruturas Metálicas</dd></dl>
+        <dl><dt>CNPJ</dt><dd class="mono">42.535.007/0001-58</dd></dl>
+        <dl><dt>Fundação</dt><dd>30/06/2021 · situação ativa</dd></dl>
+        <dl><dt>Sócios / administradores</dt><dd>Anderson Cardoso e Silva, Artur Rodrigues de Souza</dd></dl>
+        <dl><dt>Endereço</dt><dd>Rodovia GO-222, sentido Nerópolis, KM 7 (à direita), Portal da Serra, Q-03 L-18, S/N — Nova Veneza-GO, CEP 75470-000 (entre Nerópolis e Nova Veneza)</dd></dl>
+        <dl><dt>Estrutura própria</dt><dd>3.000 m² de terreno · 700 m² de área construída</dd></dl>
+        <dl><dt>WhatsApp</dt><dd class="mono">(62) 9 9606-1223 · (62) 9 9815-1581</dd></dl>
+        <dl><dt>E-mail</dt><dd class="mono">2j.asolucoes@gmail.com</dd></dl>
+        <dl><dt>Instagram</dt><dd>@2j.asolucoes — 1.334 seguidores</dd></dl>
+      </div>
+
+      <div class="callout">
+        <b>Posicionamento atual (voz do portfólio):</b> "referência na prestação de serviços na área de fabricação e montagem de estrutura metálica, especialmente na área agrícola", com compromisso de custo-benefício, mão de obra qualificada, equipamentos de ponta e "preços justos".
+      </div>
+      <div class="pillrow">
+        <span class="pill">Foco agrícola / irrigação</span>
+        <span class="pill">Fabricação + montagem própria</span>
+        <span class="pill">Sem site institucional hoje</span>
+        <span class="pill">Sem avaliações públicas no Google</span>
+        <span class="pill">Presença só no Instagram</span>
+      </div>
+    </section>
+
+    <!-- 2. MERCADO -->
+    <section id="mercado">
+      <h2>2. Mercado e nicho</h2>
+      <p class="lede">A 2J.A não compete no mercado genérico de "estruturas metálicas" (galpões, coberturas) — o portfólio mostra uma especialização clara: infraestrutura metálica para <b>captação e bombeamento de água na irrigação agrícola</b>, sobretudo para sistemas de pivô central.</p>
+      <div class="prose">
+        <p>A região entre Nerópolis e Nova Veneza fica no coração do cinturão de agronegócio de Goiás (soja, milho, algodão), com altíssima densidade de pivôs centrais que dependem de captação de água em rios e represas — exatamente o problema que os produtos da 2J.A resolvem (balsas flutuantes, flutuadores, conexões PEAD, reservatórios).</p>
+        <p>Isso deve ser o eixo central do site: não "fabricante de estruturas metálicas" genérico, e sim <b>especialista em infraestrutura de captação de água para irrigação</b>, com estruturas metálicas como o meio, não o fim.</p>
+      </div>
+    </section>
+
+    <!-- 3. CATALOGO -->
+    <section id="catalogo">
+      <h2>3. Catálogo de produtos</h2>
+      <p class="lede">12 produtos identificados no portfólio, organizados em 3 famílias. Os 5 marcados como <span class="champion-badge" style="vertical-align:1px">🏆 Campeão</span> foram confirmados pelo cliente como os de maior venda/margem — são eles que abrem o site; os outros 7 entram como vitrine complementar (ver seção 6).</p>
+
+      <div class="cat-group">
+        <div class="cat-group__head"><h3>A · Captação e Flutuação</h3><span>linha principal</span></div>
+        <div class="cardgrid">
+          <div class="prodcard champion"><span class="num">01</span><span class="champion-badge">🏆 Campeão</span><h4>Balsa para Bomba Bloc.</h4><ul>
+            <li>Plataforma de manutenção e montagem</li><li>Suporte para PEAD</li><li>Telhado de proteção da bomba</li><li>Olhal de ancoragem e içamento</li><li>Ajuste de altura da bomba</li><li>Ajuste de equilíbrio da balsa</li>
+          </ul></div>
+          <div class="prodcard champion"><span class="num">02</span><span class="champion-badge">🏆 Campeão</span><h4>Balsa para Bomba Mancalizada</h4><ul>
+            <li>Plataforma de manutenção e montagem</li><li>Suporte para PEAD</li><li>Telhado de proteção da bomba</li><li>Olhal de ancoragem e içamento</li><li>Ajuste de equilíbrio da balsa</li>
+          </ul></div>
+          <div class="prodcard champion"><span class="num">03</span><span class="champion-badge">🏆 Campeão</span><h4>Flutuante para PEAD</h4><ul>
+            <li>Ajuste de equilíbrio do flutuante</li>
+          </ul></div>
+          <div class="prodcard champion"><span class="num">04</span><span class="champion-badge">🏆 Campeão</span><h4>Flutuante para Válvula de Pé</h4><ul>
+            <li>Mesma linha construtiva do flutuante para PEAD</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="cat-group">
+        <div class="cat-group__head"><h3>B · Conexões, Válvulas e Acessórios</h3><span>complementos técnicos</span></div>
+        <div class="cardgrid">
+          <div class="prodcard"><span class="num">05</span><h4>Articulador de PEAD</h4><ul>
+            <li>Galvanização a fogo</li><li>Mangote com trama de aço</li>
+          </ul></div>
+          <div class="prodcard"><span class="num">06</span><h4>Conexões de Aço Zincado</h4><ul>
+            <li>Curvas, tês e adaptadores para linhas de captação</li>
+          </ul></div>
+          <div class="prodcard"><span class="num">07</span><h4>Cestos para Sucção</h4><ul>
+            <li>Telados em aço, montados sobre flange</li>
+          </ul></div>
+          <div class="prodcard"><span class="num">08</span><h4>Válvula de Pé de Inox</h4><ul>
+            <li>Corpo em aço inox com cesto de sucção integrado</li>
+          </ul></div>
+          <div class="prodcard"><span class="num">09</span><h4>Ípsilon de Aço Zincado</h4><ul>
+            <li>Peça em "Y" para divisão/junção de linhas</li>
+          </ul></div>
+        </div>
+      </div>
+
+      <div class="cat-group">
+        <div class="cat-group__head"><h3>C · Estruturas e Armazenamento</h3><span>projetos maiores</span></div>
+        <div class="cardgrid">
+          <div class="prodcard"><span class="num">10</span><h4>Pipe Rack</h4><ul>
+            <li>Estrutura elevada para sustentação de tubulações</li>
+          </ul></div>
+          <div class="prodcard"><span class="num">11</span><h4>Barrilete</h4><ul>
+            <li>Coletor metálico para distribuição de linhas de água</li>
+          </ul></div>
+          <div class="prodcard champion"><span class="num">12</span><span class="champion-badge">🏆 Campeão</span><h4>Reservatório de Água</h4><ul>
+            <li>Torre elevada / caixa d'água metálica</li>
+          </ul></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. CONCORRENCIA -->
+    <section id="concorrencia">
+      <h2>4. Análise da concorrência</h2>
+      <p class="lede">Pesquisa de mercado nacional e regional (Goiás) por fabricantes de balsas de captação, flutuantes PEAD e estruturas metálicas correlatas ao agronegócio.</p>
+
+      <div class="tablewrap">
+        <table>
+          <thead>
+            <tr><th>Empresa</th><th>Região</th><th>Foco</th><th>Diferenciais observados</th><th>Relevância</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="company">Fortmetal<small>fortmetal.com.br</small></td>
+              <td>Matozinhos-MG · nacional</td>
+              <td>Reservatórios, bebedouros, reator anaeróbio e balsa metálica (generalista, multi-setor)</td>
+              <td>ISO 9001, 27 anos, frota própria, garantia estrutural de 5 anos, clientes como Vale/Cemig/Copasa, blog técnico</td>
+              <td><span class="tag-indirect">Indireto</span> — referência de site a estudar</td>
+            </tr>
+            <tr>
+              <td class="company">Grupo H2O Ambiental<small>h2oambiental.com.br</small></td>
+              <td>Nacional</td>
+              <td>Balsas de captação para prefeituras, saneamento e indústria</td>
+              <td>Passarela pivotante como diferencial técnico, aço inox 304, galeria extensa de fotos por produto</td>
+              <td><span class="tag-indirect">Indireto</span> — público B2G, não agro</td>
+            </tr>
+            <tr>
+              <td class="company">Hidrogoiás<small>hidrogoiasreservatorio.com</small></td>
+              <td>Guapó-GO · regional</td>
+              <td>Reservatórios metálicos e bebedouros para o setor rural</td>
+              <td>Base em Goiás, atende agronegócio local, mas não fabrica balsas/flutuantes</td>
+              <td><span class="tag-direct">Direto (geografia)</span></td>
+            </tr>
+            <tr>
+              <td class="company">RVAAgro<small>rvaagro.com</small></td>
+              <td>Nacional</td>
+              <td>Categoria dedicada a balsas flutuantes para irrigação</td>
+              <td>Catálogo online estruturado por categoria de produto</td>
+              <td><span class="tag-direct">Direto (produto)</span></td>
+            </tr>
+            <tr>
+              <td class="company">JBA Projetos &amp; Engenharia<small>Barretos-SP</small></td>
+              <td>Cinturão agro de SP · regional</td>
+              <td>Balsas de irrigação para captação em rios, lagos e represas</td>
+              <td>Foco 100% agro/irrigação — site fora do ar no momento da pesquisa</td>
+              <td><span class="tag-direct">Direto (nicho)</span></td>
+            </tr>
+            <tr>
+              <td class="company">KP Bombas<small>kpbombas.com</small></td>
+              <td>Rio Grande do Sul</td>
+              <td>Balsa flutuante para bomba centrífuga — irrigação de arroz e drenagem</td>
+              <td>Especialista regional em outro cultivo (arroz), suporta 10–75 CV</td>
+              <td><span class="tag-direct">Direto (produto)</span></td>
+            </tr>
+            <tr>
+              <td class="company">Bombetec<small>bombetec.com.br</small></td>
+              <td>Nacional</td>
+              <td>Bombas + balsa/bomba flutuante como acessório</td>
+              <td>Entra pelo lado do equipamento (bomba), balsa é complementar</td>
+              <td><span class="tag-indirect">Adjacente</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 5. OPORTUNIDADES -->
+    <section id="oportunidades">
+      <h2>5. Oportunidades e riscos</h2>
+      <div class="split">
+        <div class="opp-card">
+          <h3>Oportunidades</h3>
+          <ul>
+            <li>Nenhum concorrente pesquisado reúne o <b>kit completo</b> (balsa + flutuante + conexões PEAD + reservatório) com base física entre Nerópolis e Nova Veneza — a 2J.A pode se posicionar como fornecedor único ponta a ponta.</li>
+            <li>Zero presença digital hoje (sem site, sem avaliações no Google) — terreno livre para dominar buscas locais como "balsa para bomba de irrigação Goiás" e "estrutura metálica pivô central GO".</li>
+            <li>Localização às margens da GO-222, dentro do próprio cinturão de pivôs centrais — proximidade física é um argumento de venda (frete, visita técnica, agilidade).</li>
+            <li>Fortmetal mostra que garantia formal + fotos de obra + prova social converte bem; a 2J.A já tem o material de campo (portfólio) para construir isso.</li>
+            <li>A paleta ferrugem/aço já definida para o site foge do verde saturado do setor (Bauer, Valley/Central Irrigação, Hidrogeral, Irrigafort usam verde) — diferenciação visual imediata.</li>
+          </ul>
+        </div>
+        <div class="threat-card">
+          <h3>Riscos a mitigar no site</h3>
+          <ul>
+            <li>Sem certificações (ISO) ou clientes-logo grandes como a Fortmetal — a credibilidade precisa vir de obras entregues, fotos reais de campo e tempo de mercado (desde 2021).</li>
+            <li>Ausência de reviews públicos pode gerar desconfiança no primeiro contato via busca — vale incentivar avaliações no Google Meu Negócio em paralelo ao site.</li>
+            <li>Concorrentes de nicho (JBA, KP Bombas, RVAAgro) já são achados por quem busca "balsa para irrigação" — o site precisa nascer com SEO local desde o dia um, não como reforma futura.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. SITEMAP -->
+    <section id="sitemap">
+      <h2>6. Estrutura proposta do site</h2>
+      <p class="lede">Objetivo confirmado com o cliente: site vitrine em <b>página única</b> (one-page), sem menu institucional extenso — toda a navegação empurra para o WhatsApp, com hierarquia clara entre os 5 produtos campeões e os 7 produtos menores.</p>
+
+      <div class="sitemap">
+        <ul>
+          <li><span class="page-node top">Home (página única)</span>
+            <ul>
+              <li><span class="leaf">Hero + botão WhatsApp fixo</span></li>
+              <li><span class="leaf">Produtos Campeões (5) — cards grandes, 1 CTA cada</span></li>
+              <li><span class="leaf">Outros Produtos (7) — grade compacta, 1 CTA no fim</span></li>
+              <li><span class="leaf">Diferenciais rápidos</span></li>
+              <li><span class="leaf">Área de atuação</span></li>
+              <li><span class="leaf">Rodapé com contato completo</span></li>
+            </ul>
+          </li>
+          <li><span class="page-node top">Botão WhatsApp flutuante</span>
+            <ul>
+              <li><span class="leaf">Fixo do hero ao rodapé, em toda a rolagem</span></li>
+              <li><span class="leaf">Mensagem pré-preenchida conforme a seção clicada</span></li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div class="callout" style="margin-top:8px">
+        <b>Por que uma página só:</b> sem "Quem Somos", "Produtos" e "Contato" como páginas separadas, o visitante nunca sai da rota "viu o produto → chamou no WhatsApp". O institucional vira uma linha curta no hero e um bloco de diferenciais — não uma página que rouba clique do objetivo principal.
+      </div>
+    </section>
+
+    <!-- 7. PAGINA A PAGINA -->
+    <section id="paginas">
+      <h2>7. Seção por seção da Home</h2>
+      <p class="lede">Como cada bloco da página única deve funcionar, já considerando o material disponível no portfólio.</p>
+
+      <div class="pagecard">
+        <div class="pagecard__head"><h3>1 · Hero</h3><span class="obj">objetivo: dizer o que a 2J.A faz e abrir o WhatsApp em 1 clique</span></div>
+        <div class="pagecard__body">
+          <ol>
+            <li><b>Headline</b> focado no problema real ("Infraestrutura metálica para captação de água na sua irrigação"), sem enrolação institucional.</li>
+            <li><b>Imagem de fundo</b> — balsa em operação no rio (já existe no portfólio, pág. 4), a foto mais forte do material atual.</li>
+            <li><b>Botão principal</b> "Falar no WhatsApp" indo direto para o número — sem formulário no caminho.</li>
+            <li><b>Linha de confiança</b> curta abaixo do botão: "Desde 2021 · Entre Nerópolis e Nova Veneza-GO · Fabricação própria em 3.000 m²".</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="pagecard">
+        <div class="pagecard__head"><h3>2 · Produtos Campeões</h3><span class="obj">objetivo: vender os 5 produtos que mais convertem, com destaque visual</span></div>
+        <div class="pagecard__body">
+          <ol>
+            <li><b>Cards grandes</b> com foto real, nome e 2–3 componentes-chave — Balsa Bloc, Balsa Mancalizada, Flutuante para PEAD, Flutuante para Válvula de Pé e Reservatório de Água.</li>
+            <li><b>Um botão de WhatsApp por card</b>, com mensagem pré-preenchida citando o produto (ex.: "Olá! Quero um orçamento para a Balsa para Bomba Bloc.").</li>
+            <li><b>Ordem sugerida</b> — as duas balsas primeiro (maior porte/ticket), reservatório por último.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="pagecard">
+        <div class="pagecard__head"><h3>3 · Outros Produtos</h3><span class="obj">objetivo: mostrar o catálogo completo sem competir com os campeões</span></div>
+        <div class="pagecard__body">
+          <ol>
+            <li><b>Grade compacta</b> (foto pequena + nome) para os 7 itens complementares: Articulador de PEAD, Conexões de Aço Zincado, Cestos para Sucção, Válvula de Pé de Inox, Ípsilon de Aço Zincado, Pipe Rack e Barrilete.</li>
+            <li><b>Um único CTA no fim da grade</b> — "Não achou o que precisa? Fale com a gente no WhatsApp" — em vez de um botão por item, para não brigar visualmente com os campeões.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="pagecard">
+        <div class="pagecard__head"><h3>4 · Diferenciais + Área de atuação</h3><span class="obj">objetivo: confiança rápida, sem página "Quem Somos" separada</span></div>
+        <div class="pagecard__body">
+          <ol>
+            <li><b>Diferenciais em cards curtos</b> — preço justo, agilidade, mão de obra qualificada, parceria, estrutura própria de 3.000 m².</li>
+            <li><b>Área de atuação</b> — Goiás e Centro-Oeste, reforçando proximidade com o produtor rural (confirmar abrangência exata na seção 8).</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="pagecard">
+        <div class="pagecard__head"><h3>5 · Rodapé + Contato</h3><span class="obj">objetivo: última chance de conversão de quem rolou a página inteira</span></div>
+        <div class="pagecard__body">
+          <ol>
+            <li><b>Dois números de WhatsApp</b> já usados pela empresa, com botão de clique direto.</li>
+            <li><b>Endereço</b> — Rodovia GO-222, KM 7, entre Nerópolis e Nova Veneza-GO — com link para mapa.</li>
+            <li><b>E-mail e Instagram</b> como canais secundários.</li>
+            <li><b>Botão WhatsApp flutuante</b> acompanhando a rolagem, do hero ao rodapé.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. PROXIMOS PASSOS -->
+    <section id="proximos">
+      <h2>8. O que falta para fechar o projeto</h2>
+      <p class="lede">Itens que dependem do cliente antes de iniciar o design final do site.</p>
+      <ol class="steps">
+        <li><p><b>Especificações técnicas por produto</b> — vazão, CV suportado, dimensões e capacidade dos reservatórios, para preencher as fichas de produto com números reais.</p></li>
+        <li><p><b>Depoimentos ou nomes de fazendas atendidas</b> — mesmo que anonimizado, fortalece a prova social que hoje o site não tem como certificação.</p></li>
+        <li><p><b>Fotos e vídeos adicionais em alta resolução</b> — o portfólio já tem bom material, mas vale complementar com vídeos institucionais para a home.</p></li>
+        <li><p><b>Confirmar área de atendimento</b> — só Goiás, Centro-Oeste inteiro, ou nacional (impacta o texto de "área de atuação" e o SEO regional).</p></li>
+        <li><p><b>Domínio e hospedagem</b> — já contratados pela 2J.A na Hostinger.</p></li>
+        <li><p><b>Texto das mensagens pré-preenchidas do WhatsApp</b> — validar com o cliente a mensagem padrão de cada um dos 5 botões dos produtos campeões e do botão flutuante.</p></li>
+      </ol>
+    </section>
+
+    <footer>
+      Briefing preparado a partir do portfólio institucional em PDF, perfil do Instagram @2j.asolucoes, registro público da empresa (Econodata) e pesquisa de mercado sobre fabricantes de estruturas de captação para irrigação agrícola no Brasil, incluindo benchmark visual de Bauer, Central Irrigação/Valley, Hidrogeral, Irrigafort e Ficorte Laser. Dados de mercado sujeitos a mudança — revisar concorrência a cada novo ciclo de planejamento.
+    </footer>
+  </main>
+</div>
