@@ -153,16 +153,23 @@ p{margin:0 0 1em;}
   transition:background .25s ease, border-color .25s ease, backdrop-filter .25s ease;
 }
 .site-header.is-scrolled{
-  background:color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter:blur(10px);
+  /* fully opaque once scrolled: the header sits in front of many different
+     photos further down the page, a translucent bar would keep bleeding
+     whatever is directly behind it through and break the logo's contrast */
+  background:var(--bg);
   border-bottom-color:var(--line);
 }
 .header-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
-.logo-img{height:38px;width:auto;filter:brightness(0) invert(1);transition:filter .25s ease;}
-.site-header.is-scrolled .logo-img{filter:brightness(0) saturate(100%);}
+.logo-img{height:38px;width:auto;display:block;}
+
+/* logo swap: white lockup over the hero photo, black lockup once the header is solid */
+.logo-black{display:none;}
+.logo-white{display:block;}
+.site-header.is-scrolled .logo-black{display:block;}
+.site-header.is-scrolled .logo-white{display:none;}
 @media (prefers-color-scheme: dark){
-  .logo-img{filter:brightness(0) invert(1);}
-  .site-header.is-scrolled .logo-img{filter:none;}
+  .site-header.is-scrolled .logo-black{display:none;}
+  .site-header.is-scrolled .logo-white{display:block;}
 }
 #scroll-sentinel{position:absolute;top:0;height:1px;width:1px;pointer-events:none;}
 
@@ -513,6 +520,20 @@ p{margin:0 0 1em;}
   .ig-strip{grid-template-columns:repeat(3, 1fr);}
 }
 
+/* ---- Video institucional ---- */
+.video-institucional{background:var(--surface-2);}
+.video-wrap{text-align:center;}
+.video-wrap .bastidores-sub{margin-bottom:32px;}
+.video-player{
+  width:100%;
+  max-width:340px;
+  aspect-ratio:9/16;
+  margin:0 auto;
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  background:#000;
+}
+
 /* ---- Footer ---- */
 .site-footer{background:var(--surface-2);border-top:1px solid var(--line);padding:64px 0 28px;}
 .footer-inner{
@@ -521,8 +542,12 @@ p{margin:0 0 1em;}
   gap:40px;
   margin-bottom:40px;
 }
-.footer-logo{height:34px;width:auto;margin-bottom:14px;filter:brightness(0) saturate(100%);}
-@media (prefers-color-scheme: dark){ .footer-logo{filter:none;} }
+.footer-logo{height:34px;width:auto;margin-bottom:14px;display:block;}
+.footer-logo.logo-white{display:none;}
+@media (prefers-color-scheme: dark){
+  .footer-logo.logo-black{display:none;}
+  .footer-logo.logo-white{display:block;}
+}
 .footer-extra{font-size:14.5px;color:var(--text-muted);max-width:32ch;}
 .footer-label{
   font-family:var(--font-data);
