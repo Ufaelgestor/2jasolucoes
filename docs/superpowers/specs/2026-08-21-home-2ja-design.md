@@ -121,6 +121,24 @@ SEO: `<title>` e `<meta name="description">` exatamente como especificados na co
 (seção 7). Sem analytics/tracking nesta primeira versão — pode entrar depois se o
 cliente pedir.
 
+## Nota — revisão de layout (anti-slop, v3)
+
+A v1/v2 usava a mesma família de layout (grade de cards brancos com sombra, radius
+uniforme) em três seções seguidas (Produtos Campeões, Outros Produtos, Diferenciais) —
+a assinatura visual mais reconhecível de "feito por IA" (skill `design-taste-frontend`,
+regra de Section-Layout-Repetition). Revisado para três composições genuinamente
+diferentes:
+- **Produtos Campeões**: um destaque editorial full-bleed para o carro-chefe (Balsa
+  Bloc., sem card, bullets em duas colunas) + bento assimétrico para os outros 4
+  (tamanhos de célula variados, foto como fundo com texto sobreposto).
+- **Outros Produtos**: lista compacta de duas colunas (miniatura + nome + descrição),
+  separada por hairlines, sem cards nem sombra.
+- **Diferenciais**: lista numerada editorial (numeral serifado grande + título +
+  descrição), também sem cards.
+Eyebrows (rótulos pequenos em caixa alta) reduzidos de 4 para 1 na página inteira.
+Adicionado scroll-reveal leve (fade + translateY via IntersectionObserver,
+`prefers-reduced-motion` respeitado) para dar ritmo sem ser decorativo.
+
 ## Nota — fotos adicionais da empresa
 
 O Artur pediu para incorporar mais fotos reais da empresa (não só produto). O perfil
