@@ -20,6 +20,7 @@
   </defs>
 </svg>
 
+<div id="scroll-sentinel"></div>
 <header class="site-header">
   <div class="wrap header-inner">
     <a href="#topo" class="logo-link">
@@ -70,8 +71,8 @@
       <h2 class="section-title reveal">Produtos Campeões</h2>
 
       <!-- destaque: o carro-chefe, tratamento editorial cheio -->
-      <article class="champ-feature reveal">
-        <a href="produtos/balsa-bomba-bloc.html" class="champ-feature-photo" style="background-image:url('assets/img/produto-balsa-bloc.jpg')" aria-label="Ver detalhes: Balsa para Bomba Bloc."></a>
+      <article class="champ-feature reveal" style="background-image:url('assets/img/produto-balsa-bloc.jpg')">
+        <span class="champ-feature-scrim"></span>
         <div class="champ-feature-body">
           <span class="champ-feature-tag">O mais vendido</span>
           <h3><a href="produtos/balsa-bomba-bloc.html">Balsa para Bomba Bloc.</a></h3>
@@ -84,7 +85,10 @@
             <li>Ajuste de altura da bomba</li>
             <li>Ajuste de equilíbrio da balsa</li>
           </ul>
-          <a href="#" class="btn btn-accent" data-wa="Olá! Vim pelo site e quero um orçamento para a Balsa para Bomba Bloc.">Pedir orçamento</a>
+          <div class="champ-feature-actions">
+            <a href="#" class="btn btn-accent" data-wa="Olá! Vim pelo site e quero um orçamento para a Balsa para Bomba Bloc.">Pedir orçamento</a>
+            <a href="produtos/balsa-bomba-bloc.html" class="champ-feature-more">Ver detalhes completos →</a>
+          </div>
         </div>
       </article>
 
@@ -197,45 +201,48 @@
   </section>
 
   <!-- 4. DIFERENCIAIS -->
-  <section class="section diferenciais">
-    <div class="wrap">
-      <svg class="brand-mark reveal" viewBox="0 0 90 66" aria-hidden="true">
-        <rect x="2" y="22" width="14" height="18" fill="currentColor"/><rect x="2" y="40" width="14" height="10" fill="url(#brandHatch)"/>
-        <rect x="20" y="13" width="14" height="27" fill="currentColor"/><rect x="20" y="40" width="14" height="16" fill="url(#brandHatch)"/>
-        <rect x="38" y="3" width="14" height="37" fill="currentColor"/><rect x="38" y="40" width="14" height="26" fill="url(#brandHatch)"/>
-        <rect x="56" y="22" width="14" height="18" fill="currentColor"/><rect x="56" y="40" width="14" height="10" fill="url(#brandHatch)"/>
-        <rect x="74" y="16" width="14" height="24" fill="currentColor"/><rect x="74" y="40" width="14" height="14" fill="url(#brandHatch)"/>
-        <rect x="0" y="39" width="90" height="2" fill="currentColor"/>
-      </svg>
-      <h2 class="section-title reveal">Diferenciais</h2>
+  <section class="diferenciais">
+    <div class="dif-split">
+      <div class="dif-content reveal">
+        <svg class="brand-mark" viewBox="0 0 90 66" aria-hidden="true">
+          <rect x="2" y="22" width="14" height="18" fill="currentColor"/><rect x="2" y="40" width="14" height="10" fill="url(#brandHatch)"/>
+          <rect x="20" y="13" width="14" height="27" fill="currentColor"/><rect x="20" y="40" width="14" height="16" fill="url(#brandHatch)"/>
+          <rect x="38" y="3" width="14" height="37" fill="currentColor"/><rect x="38" y="40" width="14" height="26" fill="url(#brandHatch)"/>
+          <rect x="56" y="22" width="14" height="18" fill="currentColor"/><rect x="56" y="40" width="14" height="10" fill="url(#brandHatch)"/>
+          <rect x="74" y="16" width="14" height="24" fill="currentColor"/><rect x="74" y="40" width="14" height="14" fill="url(#brandHatch)"/>
+          <rect x="0" y="39" width="90" height="2" fill="currentColor"/>
+        </svg>
+        <h2 class="section-title">Diferenciais</h2>
 
-      <ol class="dif-list reveal">
-        <li class="dif-row">
-          <span class="dif-num">01</span>
-          <span class="dif-title">Preço Justo</span>
-          <span class="dif-desc">Custo-benefício real, sem inflar valor.</span>
-        </li>
-        <li class="dif-row">
-          <span class="dif-num">02</span>
-          <span class="dif-title">Agilidade</span>
-          <span class="dif-desc">Fabricação e montagem rápida, pra sua safra não esperar.</span>
-        </li>
-        <li class="dif-row">
-          <span class="dif-num">03</span>
-          <span class="dif-title">Mão de Obra Qualificada</span>
-          <span class="dif-desc">Equipe experiente em estrutura metálica pro agro.</span>
-        </li>
-        <li class="dif-row">
-          <span class="dif-num">04</span>
-          <span class="dif-title">Parceria</span>
-          <span class="dif-desc">Trabalhamos junto com você, do projeto à entrega.</span>
-        </li>
-        <li class="dif-row">
-          <span class="dif-num">05</span>
-          <span class="dif-title">Estrutura Própria</span>
-          <span class="dif-desc">3.000 m² de fábrica entre Nerópolis e Nova Veneza-GO, prontos pra atender.</span>
-        </li>
-      </ol>
+        <ol class="dif-list">
+          <li class="dif-row">
+            <span class="dif-num">01</span>
+            <span class="dif-title">Preço Justo</span>
+            <span class="dif-desc">Custo-benefício real, sem inflar valor.</span>
+          </li>
+          <li class="dif-row">
+            <span class="dif-num">02</span>
+            <span class="dif-title">Agilidade</span>
+            <span class="dif-desc">Fabricação e montagem rápida, pra sua safra não esperar.</span>
+          </li>
+          <li class="dif-row">
+            <span class="dif-num">03</span>
+            <span class="dif-title">Mão de Obra Qualificada</span>
+            <span class="dif-desc">Equipe experiente em estrutura metálica pro agro.</span>
+          </li>
+          <li class="dif-row">
+            <span class="dif-num">04</span>
+            <span class="dif-title">Parceria</span>
+            <span class="dif-desc">Trabalhamos junto com você, do projeto à entrega.</span>
+          </li>
+          <li class="dif-row">
+            <span class="dif-num">05</span>
+            <span class="dif-title">Estrutura Própria</span>
+            <span class="dif-desc">3.000 m² de fábrica entre Nerópolis e Nova Veneza-GO, prontos pra atender.</span>
+          </li>
+        </ol>
+      </div>
+      <div class="dif-photo" style="background-image:url('assets/img/instagram/ig-solda.jpg')"></div>
     </div>
   </section>
 

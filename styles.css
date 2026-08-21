@@ -14,7 +14,7 @@
   --font-display:"Bodoni Moda",Georgia,"Iowan Old Style","Palatino Linotype",serif;
   --font-body:"Instrument Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   --font-data:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
-  --photo-grade:contrast(1.1) saturate(.85) brightness(.99);
+  --photo-grade:contrast(1.16) saturate(1.05) brightness(.97);
 }
 
 @media (prefers-color-scheme: dark){
@@ -145,16 +145,26 @@ p{margin:0 0 1em;}
 .btn-sm{padding:9px 18px;font-size:13.5px;}
 .btn-lg{padding:16px 32px;font-size:16.5px;}
 
-/* ---- Header ---- */
+/* ---- Header: floating over the hero, solidifies on scroll ---- */
 .site-header{
-  position:sticky;top:0;z-index:50;
+  position:fixed;top:0;left:0;right:0;z-index:50;
+  background:transparent;
+  border-bottom:1px solid transparent;
+  transition:background .25s ease, border-color .25s ease, backdrop-filter .25s ease;
+}
+.site-header.is-scrolled{
   background:color-mix(in srgb, var(--bg) 88%, transparent);
   backdrop-filter:blur(10px);
-  border-bottom:1px solid var(--line);
+  border-bottom-color:var(--line);
 }
-.header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;}
-.logo-img{height:38px;width:auto;filter:brightness(0) saturate(100%);}
-@media (prefers-color-scheme: dark){ .logo-img{filter:none;} }
+.header-inner{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;}
+.logo-img{height:38px;width:auto;filter:brightness(0) invert(1);transition:filter .25s ease;}
+.site-header.is-scrolled .logo-img{filter:brightness(0) saturate(100%);}
+@media (prefers-color-scheme: dark){
+  .logo-img{filter:brightness(0) invert(1);}
+  .site-header.is-scrolled .logo-img{filter:none;}
+}
+#scroll-sentinel{position:absolute;top:0;height:1px;width:1px;pointer-events:none;}
 
 /* ---- Hero ---- */
 .hero{
@@ -193,38 +203,53 @@ p{margin:0 0 1em;}
 
 /* ---- Produto campeão em destaque (editorial, sem card) ---- */
 .champ-feature{
-  display:grid;
-  grid-template-columns:1.2fr 1fr;
-  gap:56px;
-  align-items:center;
+  position:relative;
+  display:flex;
+  align-items:flex-end;
+  min-height:640px;
   margin-top:40px;
-  padding-bottom:64px;
-  border-bottom:1px solid var(--line);
-}
-.champ-feature-photo{
-  display:block;
-  aspect-ratio:16/11;
+  border-radius:var(--radius);
+  overflow:hidden;
   background-size:cover;
   background-position:center;
-  border-radius:var(--radius);
-  transition:opacity .15s ease;
+  filter:var(--photo-grade);
 }
-.champ-feature-photo:hover{opacity:.9;}
+.champ-feature-scrim{
+  position:absolute;inset:0;
+  background:linear-gradient(90deg, rgba(15,12,8,.88) 0%, rgba(15,12,8,.55) 42%, rgba(15,12,8,.08) 78%);
+}
+.champ-feature-body{position:relative;padding:56px;max-width:620px;color:#fff;}
 .champ-feature-tag{
   display:inline-block;
   font-family:var(--font-data);
   font-size:11.5px;
   letter-spacing:.08em;
   text-transform:uppercase;
-  color:var(--accent-2);
+  color:rgba(255,255,255,.7);
   margin-bottom:10px;
 }
-.champ-feature-body h3{font-size:clamp(24px,2.6vw,32px);margin-bottom:.35em;}
+.champ-feature-body h3{font-size:clamp(30px,3.6vw,44px);margin-bottom:.3em;color:#fff;}
 .champ-feature-body h3 a{text-decoration:none;color:inherit;}
-.champ-feature-body h3 a:hover{color:var(--accent-2);}
-.gancho{color:var(--text-muted);font-size:15px;margin-bottom:16px;}
-.bullets{margin:0 0 24px;padding-left:18px;font-size:14.5px;color:var(--text);columns:2;column-gap:24px;}
+.gancho{color:rgba(255,255,255,.82);font-size:16px;margin-bottom:20px;max-width:48ch;}
+.bullets{margin:0 0 28px;padding-left:18px;font-size:14.5px;color:rgba(255,255,255,.9);columns:2;column-gap:24px;}
 .bullets li{margin-bottom:8px;break-inside:avoid;}
+.champ-feature-actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+.champ-feature-more{
+  font-family:var(--font-data);
+  font-size:13px;
+  color:rgba(255,255,255,.8);
+  text-decoration:none;
+  border-bottom:1px solid rgba(255,255,255,.4);
+  padding-bottom:2px;
+}
+.champ-feature-more:hover{color:#fff;border-color:#fff;}
+
+@media (max-width:700px){
+  .champ-feature{min-height:560px;align-items:flex-end;}
+  .champ-feature-body{padding:32px 24px;}
+  .champ-feature-scrim{background:linear-gradient(0deg, rgba(15,12,8,.9) 0%, rgba(15,12,8,.35) 55%, rgba(15,12,8,.05) 100%);}
+  .bullets{columns:1;}
+}
 
 /* ---- Bento assimétrico: demais campeões ---- */
 .champ-bento{
@@ -296,7 +321,26 @@ p{margin:0 0 1em;}
   .outros-list{grid-template-columns:1fr;}
 }
 
-/* ---- Diferenciais: lista numerada editorial ---- */
+/* ---- Diferenciais: split editorial com foto real ---- */
+.dif-split{display:grid;grid-template-columns:1fr 1fr;}
+.dif-content{
+  padding:96px 56px 96px max(24px, calc((100% - 1180px)/2 + 24px));
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.dif-photo{
+  min-height:420px;
+  background-size:cover;
+  background-position:center;
+  filter:var(--photo-grade);
+}
+@media (max-width:900px){
+  .dif-split{grid-template-columns:1fr;}
+  .dif-content{padding:56px 24px;}
+  .dif-photo{min-height:300px;order:-1;}
+}
+
 .dif-list{list-style:none;margin:40px 0 0;padding:0;}
 .dif-row{
   display:grid;

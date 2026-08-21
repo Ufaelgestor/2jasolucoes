@@ -172,6 +172,31 @@ layout, e sim falta de identidade específica da marca. Mudanças:
   resolução baixa (240px, teto do Instagram sem login), por isso aparecem em miniatura
   numa faixa, não em tamanho grande de hero.
 
+## Nota — terceira revisão (referência Floria/tasteskill.dev, v5)
+
+O usuário apontou o showcase oficial da skill (tasteskill.dev, projeto "Floria") como
+a régua visual esperada: fotografia dramática full-bleed com tipografia grande
+sobreposta direto na imagem, nav flutuante transparente sobre o hero, muito pouco
+"conteúdo em caixinha sobre fundo bege". O hero da v4 já seguia essa linha, mas o
+resto da página voltava pro seguro. Mudanças:
+
+- **Header vira nav flutuante**: `position:fixed`, transparente sobre o hero (logo em
+  branco), solidifica (fundo + blur) assim que a página rola, via
+  `IntersectionObserver` num sentinel de 1px no topo (não usa
+  `window.addEventListener('scroll')`, banido pela skill). Páginas de produto (sem
+  hero) já nascem com o header sólido.
+- **Balsa Bloc. (produto em destaque) vira full-bleed**: era uma foto ao lado de um
+  bloco de texto sobre fundo branco; agora é uma seção de foto cheia com scrim escuro
+  e texto branco sobreposto, no mesmo tratamento do hero.
+- **Diferenciais ganha fotografia real**: era só texto (a seção mais "vazia" da
+  página); agora é um split de tela cheia — lista numerada de um lado, foto real da
+  solda (Instagram, em alta dramaticidade) do outro lado, ocupando a altura toda da
+  seção.
+- **Grade fotográfica mais rica**: ajustada de leve dessaturação
+  (`saturate(.85)`) para mais contraste e saturação plena
+  (`contrast(1.16) saturate(1.05) brightness(.97)`) — mais parecido com o visual
+  "moody premium" da referência do que um visual apagado.
+
 ## Nota — fotos adicionais da empresa (resolvido na v4)
 
 O Artur pediu para incorporar mais fotos reais da empresa (não só produto). Uma

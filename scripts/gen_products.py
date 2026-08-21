@@ -126,11 +126,14 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title} | 2J.A Estruturas Metálicas</title>
 <meta name="description" content="{gancho}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,700;0,6..96,800;1,6..96,500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
 
-<header class="site-header">
+<header class="site-header is-scrolled">
   <div class="wrap header-inner">
     <a href="../index.html" class="logo-link">
       <img src="../assets/logo/logo_2ja_transparente.png" alt="2J.A Estruturas Metálicas" class="logo-img">

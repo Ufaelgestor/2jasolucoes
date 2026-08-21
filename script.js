@@ -11,6 +11,20 @@
     el.setAttribute("rel", "noopener");
   });
 
+  // Header: floats transparent over a hero, solidifies once the page has scrolled.
+  var header = document.querySelector(".site-header");
+  var sentinel = document.getElementById("scroll-sentinel");
+  if (header && sentinel && "IntersectionObserver" in window) {
+    new IntersectionObserver(
+      function (entries) {
+        header.classList.toggle("is-scrolled", !entries[0].isIntersecting);
+      },
+      { threshold: 0 }
+    ).observe(sentinel);
+  } else if (header) {
+    header.classList.add("is-scrolled");
+  }
+
   // Scroll reveal: fades sections in as they enter view (hierarchy/pacing, not decoration).
   if ("IntersectionObserver" in window) {
     var observer = new IntersectionObserver(
