@@ -139,15 +139,51 @@ Eyebrows (rótulos pequenos em caixa alta) reduzidos de 4 para 1 na página inte
 Adicionado scroll-reveal leve (fade + translateY via IntersectionObserver,
 `prefers-reduced-motion` respeitado) para dar ritmo sem ser decorativo.
 
-## Nota — fotos adicionais da empresa
+## Nota — segunda revisão (identidade e riqueza visual, v4)
 
-O Artur pediu para incorporar mais fotos reais da empresa (não só produto). O perfil
-`@2j.asolucoes` no Instagram existe e é ativo, mas suas imagens ficam atrás de URLs de
-CDN assinadas/expiráveis que não podem ser baixadas por ferramenta automatizada
-(testado, bloqueado). Google Meu Negócio não retornou fotos via busca. Caminho mais
-confiável: o próprio Artur exportar fotos do celular/Instagram e enviar diretamente.
-Por ora, a foto aérea real da fábrica (já extraída do portfólio) foi adicionada como
-uma faixa dedicada antes da seção "Onde estamos".
+Depois da v3 (quebra da grade de cards), o feedback foi que o site ainda estava
+"simples demais" e com cara de IA. A causa raiz dessa vez não era mais a repetição de
+layout, e sim falta de identidade específica da marca. Mudanças:
+
+- **Tipografia**: trocado Georgia genérica por **Bodoni Moda** (Google Fonts) nos
+  títulos — reproduz de verdade o estilo Bodoni de alto contraste que a logo real da
+  2J.A já usa, em vez de uma serifa qualquer. Corpo do texto trocado de
+  `-apple-system` para **Instrument Sans**, mais carácter que a fonte padrão do
+  sistema. Escala tipográfica aumentada (hero e títulos de seção bem maiores/mais
+  confiantes).
+- **Ícone de barras da logo como elemento gráfico recorrente**: o ícone (5 barras,
+  metade sólida/metade tracejada em diagonal) foi recriado em SVG e reaparece como
+  marca d'água discreta antes de cada título de seção e como marca d'água grande no
+  card escuro de "Onde estamos" — internaliza um elemento que já existe na marca em
+  vez de inventar um novo.
+- **Tratamento fotográfico unificado**: como as fotos vêm de fontes muito diferentes
+  (portfólio em PDF, Instagram, fábrica), um filtro CSS leve
+  (`contrast(1.1) saturate(.85)`) é aplicado a toda foto do site pra elas lerem como
+  um conjunto único, não uma colagem de fotos soltas.
+- **Grão de filme sutil** (`opacity:.05`, `mix-blend-mode:overlay`, fixo e
+  `pointer-events:none` — barato, não repinta em scroll) pra tirar o aspecto "vetor
+  digital limpo demais" característico de página gerada por IA.
+- **Marquee único** (uma faixa, não duas) logo após o hero com fatos da marca
+  ("Fabricação própria · Desde 2021 · Nerópolis/Nova Veneza-GO · Captação de água
+  para irrigação"), respeitando `prefers-reduced-motion`.
+- **Seção "Bastidores"** com 5 fotos reais tiradas do Instagram
+  (@2j.asolucoes) via navegador real — solda com faísca, equipe com certificados,
+  chão de fábrica, balsa no pátio — linkando pro perfil real. As imagens vêm em
+  resolução baixa (240px, teto do Instagram sem login), por isso aparecem em miniatura
+  numa faixa, não em tamanho grande de hero.
+
+## Nota — fotos adicionais da empresa (resolvido na v4)
+
+O Artur pediu para incorporar mais fotos reais da empresa (não só produto). Uma
+primeira tentativa de baixar direto via `curl` nas URLs de CDN do Instagram foi
+bloqueada (URLs assinadas exigem contexto de sessão de navegador real). Na segunda
+tentativa, usando um navegador real (Playwright) apontado para
+`instagram.com/2j.asolucoes`, 6 fotos reais foram capturadas com sucesso a partir das
+respostas de rede da própria página (sem login, sem burlar autenticação — é o que
+qualquer visitante da página vê). Ficam limitadas a ~240px de largura (teto do grid
+sem login), por isso usadas em miniatura na seção "Bastidores", não em tamanho de
+hero. A foto aérea real da fábrica (extraída do portfólio, resolução maior) continua
+como a faixa dedicada antes de "Onde estamos".
 
 ## Fora de escopo (não fazer nesta rodada)
 
