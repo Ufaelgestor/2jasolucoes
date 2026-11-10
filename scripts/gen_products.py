@@ -16,9 +16,9 @@ CHAMPIONS = [
         title="Balsa para Bomba Bloc.",
         img="produto-balsa-bloc.jpg",
         galeria=[
-            "galeria/balsa-telhado-3.jpg",
+            "ia/balsa-telhado-3.jpg",
             "galeria/balsa-telhado-2.jpg",
-            "galeria/balsa-azul.jpg",
+            "ia/balsa-azul.jpg",
         ],
         gancho="Plataforma flutuante robusta para captação direta em rios e represas, com fácil acesso para manutenção da bomba.",
         bullets=[
@@ -81,10 +81,10 @@ OUTROS = [
     dict(
         slug="conexoes-aco-zincado",
         title="Conexões de Aço Zincado",
-        img="galeria/conexoes-lote.jpg",
+        img="ia/conexoes-lote.jpg",
         galeria=[
-            "galeria/conexao-te.jpg",
-            "galeria/conexao-curva.jpg",
+            "ia/conexao-te.jpg",
+            "ia/conexao-curva.jpg",
             "outros-conexoes-zincado.jpg",
         ],
         gancho="Curvas, luvas e adaptadores zincados para montagem da linha de captação.",
@@ -212,7 +212,9 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 
 
 # Fotos em pé de peça única: mostradas inteiras, sem corte, na foto principal.
-RETRATOS = {"galeria/conexao-te.jpg", "galeria/conexao-curva.jpg"}
+RETRATOS = {"ia/conexao-te.jpg", "ia/conexao-curva.jpg"}
+# Fotos em assets/img/ia/ têm o fundo trocado por IA; a página avisa abaixo da foto.
+NOTA_IA = "Produto real, cenário ilustrativo."
 
 
 def render_media(item):
@@ -221,12 +223,16 @@ def render_media(item):
     fotos = [item["img"]] + item.get("galeria", [])
     if len(fotos) == 1:
         return f"        {foto}"
+    nota = ""
+    if any(src.startswith("ia/") for src in fotos):
+        oculta = "" if item["img"].startswith("ia/") else " hidden"
+        nota = f'\n          <p class="foto-nota" id="foto-nota"{oculta}>{NOTA_IA}</p>'
     thumbs = "\n".join(
-        f'            <a class="produto-thumb{" is-active" if i == 0 else ""}" href="../assets/img/{src}" data-foto{" data-contain" if src in RETRATOS else ""} aria-label="Ver foto {i + 1} de {len(fotos)}"><img src="../assets/img/{src}" alt="" loading="lazy"></a>'
+        f'            <a class="produto-thumb{" is-active" if i == 0 else ""}" href="../assets/img/{src}" data-foto{" data-contain" if src in RETRATOS else ""}{" data-ia" if src.startswith("ia/") else ""} aria-label="Ver foto {i + 1} de {len(fotos)}"><img src="../assets/img/{src}" alt="" loading="lazy"></a>'
         for i, src in enumerate(fotos)
     )
     return f"""        <div class="produto-media">
-          {foto}
+          {foto}{nota}
           <div class="produto-thumbs">
 {thumbs}
           </div>

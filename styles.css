@@ -733,5 +733,8 @@ img{height:auto;}
 }
 
 /* Hero photo: keep the raft in frame under the text scrim. */
-.hero{background-position:center 70%;}
-@media(max-width:800px){.hero{background-position:60% center;}}
+.hero{background-position:center 60%;}
+@media(max-width:800px){.hero{background-position:82% center;}}
+.foto-nota{margin:8px 0 0;font-size:13px;line-height:1.4;color:var(--text-muted);}
+/* Factory band: taller on desktop so the whole building shows. */
+@media(min-width:801px){.fabrica-band{height:460px;}}
