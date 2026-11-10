@@ -235,3 +235,15 @@ como a faixa dedicada antes de "Onde estamos".
 - Depoimentos ou nomes de fazendas atendidas (prova social) — não existem ainda.
 - Vídeos institucionais — só fotos por enquanto.
 - Analytics/tracking.
+
+
+## Revisão mobile — setembro de 2026
+
+Prioridade solicitada: apresentação harmoniosa em celulares e navegação simples para pessoas com pouca familiaridade com tecnologia. Título principal reduzido, informações preservadas no subtítulo; fotos de produtos em proporção 4:3; margens, tamanhos de texto e botões padronizados; contatos organizados em linhas próprias. No mobile, o contato fixo ocupa uma faixa inferior e há espaço reservado ao final do documento, incluindo a área segura do aparelho. Ajustes compartilhados também se aplicam às páginas de produto.
+
+Validação da home no navegador em larguras de 320, 360, 390, 430 e 768 px, sem transbordamento horizontal detectado. Prévia local; sem publicação na hospedagem.
+
+
+## Fotos novas e grades em duas colunas — novembro de 2026
+
+Fotos enviadas pelo Arthur aplicadas em `assets/img/galeria/` (miniaturas leves em `assets/img/thumb/`). No celular, produtos, peças e a seção "Veja o produto pronto" usam grade de duas colunas, cada foto com nome e uma frase simples. Páginas da Balsa Bloc e de Conexões ganharam galeria com miniaturas. Textos repetidos do topo foram enxugados e os rótulos de link unificados em "Ver detalhes". Prévia local; sem publicação na hospedagem.

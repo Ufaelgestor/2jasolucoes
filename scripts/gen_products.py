@@ -2,6 +2,7 @@
 """Gera as páginas de produto individuais a partir dos dados abaixo.
 Reexecutar este script sempre que a copy de produto mudar."""
 import os
+from urllib.parse import quote
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT_DIR = os.path.join(ROOT, "produtos")
@@ -14,6 +15,11 @@ CHAMPIONS = [
         slug="balsa-bomba-bloc",
         title="Balsa para Bomba Bloc.",
         img="produto-balsa-bloc.jpg",
+        galeria=[
+            "galeria/balsa-telhado-3.jpg",
+            "galeria/balsa-telhado-2.jpg",
+            "galeria/balsa-azul.jpg",
+        ],
         gancho="Plataforma flutuante robusta para captação direta em rios e represas, com fácil acesso para manutenção da bomba.",
         bullets=[
             "Plataforma de manutenção e montagem",
@@ -23,7 +29,7 @@ CHAMPIONS = [
             "Ajuste de altura da bomba",
             "Ajuste de equilíbrio da balsa",
         ],
-        wa="Olá! Vim pelo site e quero um orçamento para a Balsa para Bomba Bloc.",
+        wa="Olá! Vim pelo site da 2J.A e quero um orçamento para a Balsa para Bomba Bloc.",
     ),
     dict(
         slug="balsa-bomba-mancalizada",
@@ -37,7 +43,7 @@ CHAMPIONS = [
             "Olhal de ancoragem e içamento",
             "Ajuste de equilíbrio da balsa",
         ],
-        wa="Olá! Vim pelo site e quero um orçamento para a Balsa para Bomba Mancalizada.",
+        wa="Olá! Vim pelo site da 2J.A e quero um orçamento para a Balsa para Bomba Mancalizada.",
     ),
     dict(
         slug="flutuante-pead",
@@ -45,7 +51,7 @@ CHAMPIONS = [
         img="produto-flutuante-pead.jpg",
         gancho="Sustentação e estabilidade para linhas de PEAD em operação na água.",
         bullets=["Ajuste de equilíbrio do flutuante"],
-        wa="Olá! Vim pelo site e quero um orçamento para o Flutuante para PEAD.",
+        wa="Olá! Vim pelo site da 2J.A e quero um orçamento para o Flutuante para PEAD.",
     ),
     dict(
         slug="flutuante-valvula-pe",
@@ -53,7 +59,7 @@ CHAMPIONS = [
         img="produto-flutuante-valvula.jpg",
         gancho="Flutuação dedicada para proteger e posicionar a válvula de pé do seu sistema de captação.",
         bullets=["Mesma linha construtiva do flutuante para PEAD"],
-        wa="Olá! Vim pelo site e quero um orçamento para o Flutuante para Válvula de Pé.",
+        wa="Olá! Vim pelo site da 2J.A e quero um orçamento para o Flutuante para Válvula de Pé.",
     ),
     dict(
         slug="reservatorio-agua",
@@ -61,7 +67,7 @@ CHAMPIONS = [
         img="produto-reservatorio.jpg",
         gancho="Torre elevada em aço para armazenar água com pressão e autonomia para a propriedade.",
         bullets=["Torre elevada / caixa d'água metálica"],
-        wa="Olá! Vim pelo site e quero um orçamento para um Reservatório de Água.",
+        wa="Olá! Vim pelo site da 2J.A e quero um orçamento para um Reservatório de Água.",
     ),
 ]
 
@@ -75,7 +81,12 @@ OUTROS = [
     dict(
         slug="conexoes-aco-zincado",
         title="Conexões de Aço Zincado",
-        img="outros-conexoes-zincado.jpg",
+        img="galeria/conexoes-lote.jpg",
+        galeria=[
+            "galeria/conexao-te.jpg",
+            "galeria/conexao-curva.jpg",
+            "outros-conexoes-zincado.jpg",
+        ],
         gancho="Curvas, luvas e adaptadores zincados para montagem da linha de captação.",
     ),
     dict(
@@ -114,7 +125,7 @@ for item in OUTROS:
     item.setdefault("bullets", [])
     item.setdefault(
         "wa",
-        f"Olá! Vim pelo site e quero um orçamento para o(a) {item['title']}.",
+        f"Olá! Vim pelo site da 2J.A e quero um orçamento para o(a) {item['title']}.",
     )
 
 ALL_PRODUCTS = CHAMPIONS + OUTROS
@@ -126,12 +137,16 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>{title} | 2J.A Estruturas Metálicas</title>
 <meta name="description" content="{gancho}">
+<link rel="icon" type="image/png" sizes="192x192" href="../assets/logo/favicon-2ja.png?v=2ja-1">
+<link rel="shortcut icon" href="../favicon.ico?v=2ja-1">
+<link rel="apple-touch-icon" href="../assets/logo/favicon-2ja.png?v=2ja-1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700;800&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
+<a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
 <header class="site-header is-scrolled">
   <div class="wrap header-inner">
@@ -139,23 +154,25 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
       <img src="../assets/logo/logo-preto.png" alt="2J.A Estruturas Metálicas" class="logo-img logo-black">
       <img src="../assets/logo/logo-branco.png" alt="2J.A Estruturas Metálicas" class="logo-img logo-white">
     </a>
-    <a href="#" class="btn btn-accent btn-sm" data-wa="Olá! Quero falar com a 2J.A Estruturas Metálicas.">WhatsApp</a>
+    <a href="https://wa.me/5562996061223?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%202J.A%20e%20quero%20falar%20com%20a%20equipe." class="btn btn-accent btn-sm" data-wa="Olá! Vim pelo site da 2J.A e quero falar com a equipe.">Falar no WhatsApp</a>
   </div>
 </header>
 
-<main>
+<main id="conteudo">
   <section class="section produto-detalhe">
     <div class="wrap">
       <a href="../index.html#produtos" class="voltar-link">&larr; Voltar para todos os produtos</a>
 
       <div class="produto-grid">
-        <div class="produto-foto" style="background-image:url('../assets/img/{img}')"></div>
+{media_html}
         <div class="produto-info">
           <p class="eyebrow">{eyebrow}</p>
           <h1>{title}</h1>
           <p class="gancho-lg">{gancho}</p>
 {bullets_html}
-          <a href="#" class="btn btn-accent btn-lg" data-wa="{wa}">Pedir orçamento</a>
+          <a href="https://wa.me/5562996061223?text={wa_url}" class="btn btn-accent btn-lg" data-wa="{wa}">Orçamento pelo WhatsApp</a>
+          <p class="product-help">Envie uma foto ou um áudio para tirar suas dúvidas. Nossa equipe ajuda você a escolher.</p>
+          <a class="phone-link" href="tel:+5562996061223">Prefere ligar? (62) 99606-1223</a>
         </div>
       </div>
     </div>
@@ -175,8 +192,8 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
     </div>
     <div class="footer-col">
       <p class="footer-label">Contato</p>
-      <p><a href="#" data-wa="Olá! Quero falar com a 2J.A Estruturas Metálicas.">(62) 9 9606-1223</a></p>
-      <p><a href="#" data-wa="Olá! Quero falar com a 2J.A Estruturas Metálicas.">(62) 9 9815-1581</a></p>
+      <p><a href="https://wa.me/5562996061223?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%202J.A%20e%20quero%20falar%20com%20a%20equipe." data-wa="Olá! Vim pelo site da 2J.A e quero falar com a equipe.">(62) 9 9606-1223</a></p>
+      <p><a href="https://wa.me/5562998151581?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%202J.A%20e%20quero%20falar%20com%20a%20equipe." data-wa-number="5562998151581" data-wa="Olá! Vim pelo site da 2J.A e quero falar com a equipe.">(62) 9 9815-1581</a></p>
       <p><a href="mailto:2j.asolucoes@gmail.com">2j.asolucoes@gmail.com</a></p>
       <p><a href="https://instagram.com/2j.asolucoes" target="_blank" rel="noopener">@2j.asolucoes</a></p>
     </div>
@@ -184,14 +201,36 @@ PAGE_TEMPLATE = """<!DOCTYPE html>
   <p class="copyright">© 2026 2J.A Estruturas Metálicas. Todos os direitos reservados.</p>
 </footer>
 
-<a href="#" class="wa-float" data-wa="Olá! Quero falar com a 2J.A Estruturas Metálicas." aria-label="Falar no WhatsApp">
-  <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor" aria-hidden="true"><path d="M16.001 3C9.11 3 3.5 8.607 3.5 15.5c0 2.44.71 4.71 1.94 6.63L3 29l7.05-2.4a12.4 12.4 0 0 0 5.95 1.5c6.89 0 12.5-5.607 12.5-12.5S22.89 3 16 3zm0 22.6c-1.94 0-3.75-.53-5.3-1.46l-.38-.22-4.19 1.43 1.4-4.09-.25-.4a10.05 10.05 0 0 1-1.56-5.36c0-5.6 4.55-10.15 10.15-10.15s10.15 4.55 10.15 10.15S21.6 25.6 16 25.6zm5.55-7.6c-.3-.15-1.78-.88-2.06-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.96 1.18-.18.2-.35.22-.65.08-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.79-1.68-2.09-.18-.3-.02-.46.13-.6.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.68-1.65-.94-2.26-.25-.6-.5-.5-.68-.51h-.58c-.2 0-.53.08-.8.38-.28.3-1.05 1.02-1.05 2.5s1.08 2.9 1.23 3.1c.15.2 2.13 3.25 5.16 4.56.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.43-.08-.13-.28-.2-.58-.35z"/></svg>
+<a href="https://wa.me/5562996061223?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%202J.A%20e%20quero%20falar%20com%20a%20equipe." class="wa-float" data-wa="Olá! Vim pelo site da 2J.A e quero falar com a equipe." aria-label="Falar no WhatsApp">
+  <svg viewBox="0 0 32 32" width="28" height="28" fill="currentColor" aria-hidden="true"><path d="M16.001 3C9.11 3 3.5 8.607 3.5 15.5c0 2.44.71 4.71 1.94 6.63L3 29l7.05-2.4a12.4 12.4 0 0 0 5.95 1.5c6.89 0 12.5-5.607 12.5-12.5S22.89 3 16 3zm0 22.6c-1.94 0-3.75-.53-5.3-1.46l-.38-.22-4.19 1.43 1.4-4.09-.25-.4a10.05 10.05 0 0 1-1.56-5.36c0-5.6 4.55-10.15 10.15-10.15s10.15 4.55 10.15 10.15S21.6 25.6 16 25.6zm5.55-7.6c-.3-.15-1.78-.88-2.06-.98-.28-.1-.48-.15-.68.15-.2.3-.78.98-.96 1.18-.18.2-.35.22-.65.08-.3-.15-1.27-.47-2.42-1.5-.9-.8-1.5-1.79-1.68-2.09-.18-.3-.02-.46.13-.6.14-.14.3-.35.45-.53.15-.18.2-.3.3-.5.1-.2.05-.38-.02-.53-.08-.15-.68-1.65-.94-2.26-.25-.6-.5-.5-.68-.51h-.58c-.2 0-.53.08-.8.38-.28.3-1.05 1.02-1.05 2.5s1.08 2.9 1.23 3.1c.15.2 2.13 3.25 5.16 4.56.72.31 1.28.5 1.72.64.72.23 1.38.2 1.9.12.58-.09 1.78-.73 2.03-1.43.25-.7.25-1.3.18-1.43-.08-.13-.28-.2-.58-.35z"/></svg><span>Falar no WhatsApp</span>
 </a>
 
 <script src="../script.js"></script>
 </body>
 </html>
 """
+
+
+# Fotos em pé de peça única: mostradas inteiras, sem corte, na foto principal.
+RETRATOS = {"galeria/conexao-te.jpg", "galeria/conexao-curva.jpg"}
+
+
+def render_media(item):
+    """Foto principal; com galeria, miniaturas trocam a foto (links diretos sem JS)."""
+    foto = f'<img class="produto-foto" id="produto-foto" src="../assets/img/{item["img"]}" alt="{item["title"]} — 2J.A Estruturas Metálicas">'
+    fotos = [item["img"]] + item.get("galeria", [])
+    if len(fotos) == 1:
+        return f"        {foto}"
+    thumbs = "\n".join(
+        f'            <a class="produto-thumb{" is-active" if i == 0 else ""}" href="../assets/img/{src}" data-foto{" data-contain" if src in RETRATOS else ""} aria-label="Ver foto {i + 1} de {len(fotos)}"><img src="../assets/img/{src}" alt="" loading="lazy"></a>'
+        for i, src in enumerate(fotos)
+    )
+    return f"""        <div class="produto-media">
+          {foto}
+          <div class="produto-thumbs">
+{thumbs}
+          </div>
+        </div>"""
 
 
 def render(item, eyebrow):
@@ -202,21 +241,22 @@ def render(item, eyebrow):
         bullets_html = ""
     return PAGE_TEMPLATE.format(
         title=item["title"],
-        img=item["img"],
+        media_html=render_media(item),
         gancho=item["gancho"],
         wa=item["wa"],
+        wa_url=quote(item["wa"]),
         bullets_html=bullets_html,
         eyebrow=eyebrow,
     )
 
 
 for item in CHAMPIONS:
-    html = render(item, "Produto Campeão")
+    html = render(item, "Linha principal")
     with open(os.path.join(OUT_DIR, f"{item['slug']}.html"), "w") as f:
         f.write(html)
 
 for item in OUTROS:
-    html = render(item, "Complemento Técnico")
+    html = render(item, "Peças e acessórios")
     with open(os.path.join(OUT_DIR, f"{item['slug']}.html"), "w") as f:
         f.write(html)
 

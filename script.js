@@ -1,49 +1,19 @@
+// Links work without JavaScript. Preserve the destination for each contact.
 (function () {
-  var WHATSAPP_NUMBER = "5562996061223";
-
-  document.querySelectorAll("[data-wa]").forEach(function (el) {
-    var message = el.getAttribute("data-wa");
-    el.setAttribute(
-      "href",
-      "https://wa.me/" + WHATSAPP_NUMBER + "?text=" + encodeURIComponent(message)
-    );
-    el.setAttribute("target", "_blank");
-    el.setAttribute("rel", "noopener");
+  document.querySelectorAll('[data-wa]').forEach(function (link) {
+    var number = link.getAttribute('data-wa-number') || '5562996061223';
+    link.href = 'https://wa.me/' + number + '?text=' + encodeURIComponent(link.getAttribute('data-wa'));
   });
 
-  // Header: floats transparent over a hero, solidifies once the page has scrolled.
-  var header = document.querySelector(".site-header");
-  var sentinel = document.getElementById("scroll-sentinel");
-  if (header && sentinel && "IntersectionObserver" in window) {
-    new IntersectionObserver(
-      function (entries) {
-        header.classList.toggle("is-scrolled", !entries[0].isIntersecting);
-      },
-      { threshold: 0 }
-    ).observe(sentinel);
-  } else if (header) {
-    header.classList.add("is-scrolled");
-  }
-
-  // Scroll reveal: fades sections in as they enter view (hierarchy/pacing, not decoration).
-  if ("IntersectionObserver" in window) {
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -40px 0px" }
-    );
-    document.querySelectorAll(".reveal").forEach(function (el) {
-      observer.observe(el);
+  // Product gallery: thumbnails swap the main photo.
+  var foto = document.getElementById('produto-foto');
+  var thumbs = document.querySelectorAll('[data-foto]');
+  thumbs.forEach(function (thumb) {
+    thumb.addEventListener('click', function (event) {
+      event.preventDefault();
+      foto.src = thumb.href;
+      foto.classList.toggle('is-contain', thumb.hasAttribute('data-contain'));
+      thumbs.forEach(function (other) { other.classList.toggle('is-active', other === thumb); });
     });
-  } else {
-    document.querySelectorAll(".reveal").forEach(function (el) {
-      el.classList.add("is-visible");
-    });
-  }
+  });
 })();
